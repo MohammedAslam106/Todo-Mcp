@@ -155,8 +155,9 @@ pnpm run start
 | Command | What it does |
 |---|---|
 | `pnpm run dev` | Dev server with hot reload (Vite + Fastify, server via `tsx watch`) |
-| `pnpm run build` | `tsc --noEmit`, then builds the client + SSR bundle to `client/dist/` |
-| `pnpm run start` | Production server (`NODE_ENV=production`); run `pnpm run build` first |
+| `pnpm run build` | `tsc --noEmit`, builds the client + SSR bundle to `client/dist/`, then bundles the server to `build/server.js` |
+| `pnpm run build:deploy` | `build`, then `migrate`. Used as the deploy build step (Render: `pnpm install --frozen-lockfile && pnpm run build:deploy`) |
+| `pnpm run start` | Production server (`NODE_ENV=production`, runs `build/server.js`); run `pnpm run build` first |
 | `pnpm run typecheck` | Type-checks the whole project (server + client) |
 | `pnpm run migrate` | Applies pending Drizzle migrations |
 | `pnpm run db:generate` | Generates a new migration from changes to `db/schema.ts` |

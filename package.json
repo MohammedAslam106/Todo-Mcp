@@ -7,13 +7,14 @@
     "dev": "tsx watch server.ts --dev",
     "typecheck": "tsc --noEmit",
     "build": "tsc --noEmit && cross-env NODE_ENV=production vite build && pnpm build:server",
+    "build:server": "esbuild server.ts --bundle --platform=node --format=esm --target=node22 --packages=external --sourcemap --outfile=build/server.js",
+    "build:deploy": "pnpm build && pnpm migrate",
     "start": "cross-env NODE_ENV=production node --enable-source-maps build/server.js",
     "migrate": "tsx db/migrate.ts",
     "db:generate": "drizzle-kit generate",
     "db:studio": "drizzle-kit studio",
     "mcp:stdio": "tsx mcp/stdio.ts",
-    "mcp:token": "tsx scripts/create-mcp-token.ts",
-    "build:server": "esbuild server.ts --bundle --platform=node --format=esm --target=node22 --packages=external --sourcemap --outfile=build/server.js"
+    "mcp:token": "tsx scripts/create-mcp-token.ts"
   },
   "dependencies": {
     "@fastify/cookie": "^11.1.2",
