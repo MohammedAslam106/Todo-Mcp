@@ -92,7 +92,9 @@ server.setErrorHandler((error: FastifyError, req, reply) => {
 await server.vite.ready()
 
 const port = Number(process.env.PORT) || 3000
-await server.listen({ port, host: process.env.HOST || 'localhost' })
+// Hosts like Render only route traffic to 0.0.0.0, so production listens on all interfaces.
+const host = process.env.HOST || (process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost')
+await server.listen({ port, host })
 
 // Tell whoever started the server what to do next.
 const providers = enabledProviders().map((id) => oauthProviders[id].label)
